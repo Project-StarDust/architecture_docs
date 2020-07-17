@@ -1,0 +1,17 @@
+@startuml
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+System_Ext(spatial_world, "SpatialOS World", "A persistent way to store gamedata")
+System_Ext(playfab, "PlayFab", "Stores all player-relative informations")
+
+Container_Boundary(unity_client, "UnityClient Worker") {
+    Component(player_creation, "Player Creation", "C#", "Ask Player creation to UnityGameLogic worker")
+    Component(player_login, "Player Login", "C#", "Login Player with Azure PlayFab")
+
+    Rel(player_creation, spatial_world, "Ask a Player Entity")
+    Rel(player_login, playfab, "Login with")
+}
+
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(player, "Player", "A user of Project StarDust, with a user account")
+System(stardust_client, "StarDust Client", "Client used to connect to Project StarDust servers")
+System(stardust_server, "StarDust Servers", "Servers used to compute game logic")
+System_Ext(spatial_world, "SpatialOS World", "A persistent way to store gamedata")
+System_Ext(spatial, "SpatialOS", "A scalable way to orchestrate and host gameservers")
+System_Ext(playfab, "PlayFab", "Stores all player-relative informations")
+Person(admin, "Admin", "A member of the developpement team")
+
+Rel(player, stardust_client, "Plays")
+
+Rel(stardust_client, spatial_world, "Exchange data with")
+Rel(stardust_client, playfab, "Login with")
+
+Rel(stardust_server, spatial_world, "Exchange data with")
+Rel(stardust_server, playfab, "Get player data and settings from")
+
+Rel(spatial, stardust_server, "Hosts")
+Rel(spatial, spatial_world, "Orchestrate in accordance to")
+
+Rel(admin, spatial_world, "Visualize")
+Rel(admin, spatial, "Manage")
+Rel(admin, playfab, "Analyze and modify settings")
+@enduml
